@@ -1,5 +1,3 @@
-grid = [[0 for _ in range(3)] for _ in range(3)]
-
 def check(grid, line, column, player):
     if grid[line][column] == 0:
         grid[line][column] = player
