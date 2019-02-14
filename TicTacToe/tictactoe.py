@@ -4,21 +4,19 @@ from tkinter import messagebox
 
 from utils import check
 from utils import check_game
-from utils import grid
 
 import tkinter as tk
-import copy
 
 @dataclass
 class Game(tk.Tk):
     notfinish: bool = True
     again: bool = False
+    size: int = 3
 
     def __post_init__(self):
         super().__init__()
 
-        self.size = len(grid)
-        self.grid = grid
+        self.grid = [[0 for _ in range(Game.size)] for _ in range(Game.size)]
 
         self.w, self.h = 320, 320
         self.space = 10
@@ -28,10 +26,10 @@ class Game(tk.Tk):
         self.canvas.bind("<Button-1>", self.draw_canvas)
         self.canvas.pack()
 
+        self.init() # 3x3 cases
+
         self.player = 1
         self.colors = ('red', 'blue')
-
-        self.init()
 
 
         self.mainloop()
@@ -40,26 +38,26 @@ class Game(tk.Tk):
         Game.notfinish = check_game(self.grid)
         if not Game.notfinish:
             self.canvas.update_idletasks()
+            self.player = self.player % 2 + 1 # another player play first
         else:
             self.display(f"Le gagnant est: {self.player}", question=False)
             Game.again = self.display("Voulez-vous rejouer ?", question=True)
             if Game.again:
                 self.init()
-                self.player = self.player % 2 + 1 # another player play first
             else:
                 self.quit()
 
     def init(self):
         Game.notfinish = True
-        self.grid = [[0 for _ in range(self.size)] for _ in range(self.size)]
+        self.grid = [[0 for _ in range(Game.size)] for _ in range(Game.size)]
         for y in range(
                 self.space,
-                self.square * self.size,
+                self.square * Game.size,
                 self.square
             ):
             for x in range(
                 self.space,
-                self.square * self.size,
+                self.square * Game.size,
                 self.square
             ):
                 
