@@ -15,7 +15,7 @@ def check_game(grid):
 def check_lines(grid):
     for line in grid:
         size = len(set(line))
-        if size == 1 and set(line) != set([0]): # an unique element in lines
+        if size == 1 and set(line) != {0}: # an unique element in lines
             return True
     return False
 
@@ -23,7 +23,7 @@ def check_columns(grid):
     columns = list(zip(*grid))
     for c in columns:
         size = len(set(c))
-        if size == 1 and set(c) != set([0]):
+        if size == 1 and set(c) != {0}:
             return True
     return False
 
@@ -33,6 +33,6 @@ def check_diag(grid):
     d2 = [grid[length-1-i][i] for i in range(length-1, -1, -1)]
     s1 = len(set(d1))
     s2 = len(set(d2))
-    if (s1 == 1 and set(d1) != set([0])) or (s2 == 1 and set(d2) != set([0])):
+    if (s1 == 1 and set(d1) != {0}) or (s2 == 1 and set(d2) != {0}):
         return True
     return False
